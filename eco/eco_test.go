@@ -120,6 +120,28 @@ func TestSimpleInter(t *testing.T) {
 	}
 }
 
+func TestIterpolationWithZeroes(t *testing.T) {
+	breaks := []float64{1.0, 3.0, 5.0}
+	values := []float64{4.0, 6.0, 0.0}
+
+	itreecode := "blah"
+
+	datafile := &Datafile{breaks, map[string][]float64{itreecode: values}}
+	datafiles := []*Datafile{datafile}
+
+	result := []float64{0.0}
+
+	CalcOneTree(
+		datafiles,
+		itreecode,
+		4.0,
+		result)
+
+	if result[0] != 7.0 {
+		t.Fatalf("Expected %v, got %v", 7.0, result[0])
+	}
+}
+
 // Since there isn't really a canonical benefits
 // library to test against, we're just going to
 // use a couple of exsiting OTM instances

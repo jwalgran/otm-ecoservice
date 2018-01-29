@@ -233,7 +233,14 @@ func CalcOneTree(
 		factorMinValue := 0.0
 		factorMaxValue := 0.0
 
-		lastBreakIdx := len(breaks) - 1
+		// Breaks value can be zero for large diameters. We want to find
+		// the last non-zero break.
+		lastBreakIdx := 0
+		for i, diameterBreak := range breaks {
+			if breaks[i] > 0.0 {
+				lastBreakIdx = i
+			}
+		}
 		maxdiameter := breaks[lastBreakIdx]
 
 		// Clamp to maximum diameter, as
